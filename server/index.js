@@ -2,15 +2,12 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = 3042;
+const {USER_DICTIONARY, Init} = require("./scripts/generate")
 
 app.use(cors());
 app.use(express.json());
 
-const balances = {
-  "0x1": 100,
-  "0x2": 50,
-  "0x3": 75,
-};
+const balances = USER_DICTIONARY;
 
 app.get("/balance/:address", (req, res) => {
   const { address } = req.params;
@@ -34,6 +31,7 @@ app.post("/send", (req, res) => {
 });
 
 app.listen(port, () => {
+  Init();
   console.log(`Listening on port ${port}!`);
 });
 
